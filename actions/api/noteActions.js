@@ -1,13 +1,13 @@
 const Note = require('../../db/models/note')
-
+const mysort = {createdAt:-1}
 class NoteActions {
     async saveNote(req, res) {
         const title = req.body.title;
-        const body = req.body.body;
+        const content = req.body.content;
 
         let note
         try{
-         note = new Note({title,body})
+         note = new Note({title,content})
         await note.save()
         }
         catch(err){
@@ -16,8 +16,10 @@ class NoteActions {
         res.status(201).json(note)
     }
     async getAllNotes(req, res) {
-        const doc = await Note.find({})
+        const doc = await Note.find({}).sort(mysort)
+       
         res.status(200).json(doc)
+       
     }
 
 
@@ -31,10 +33,10 @@ class NoteActions {
     async updateNote(req, res) {
         const id = req.params.id
         const title = req.body.title;
-        const body = req.body.body;
+        const body = req.body.content;
         const note = await  Note.findOne({_id:id})
         note.title=title
-        note.body=body
+        note.content=body
         await note.save()
         res.status(201).json(note)
     }

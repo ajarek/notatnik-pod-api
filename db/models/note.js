@@ -4,12 +4,14 @@ const noteSchema= new mongoose.Schema({
         type:String,
         required:true
     },
-    body:{
+    content:{
         type:String,
         required:true
     }
-})
-const Note = mongoose.model('Note',noteSchema)
+    
+},{timestamps:true}
+)
+const Note = mongoose.model('Notes',noteSchema)
 
 module.exports=Note
 

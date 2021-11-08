@@ -1,15 +1,17 @@
 //C:\Users\ajare\mongodb>bin\mongod --dbpath data <--POŁACZENIE Z BAZĄ DANYCH NA SERVERZE
 const express = require('express')
+const cors = require('cors')
 const app = express()
+app.use(cors())
+
 const {port} = require('./config')
-const bodyParser=require('body-parser')
+
 //routes
 const apiRouter = require('./routes/api')
-app.use(bodyParser.text())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-    extended:true
-}))
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+app.use(express.text())
+
 //db
 require('./db/mongoose')
 //dołączenie ścieżek'' do app
